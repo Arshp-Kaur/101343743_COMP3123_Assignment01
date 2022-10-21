@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const noteSchema = new mongoose.Schema({
+
+const userSchema = new mongoose.Schema({
 
     username:{
         type:String,
@@ -19,11 +20,5 @@ const noteSchema = new mongoose.Schema({
         max:50,
     }
 });
-//TODO - Create Note Schema here having fields
-//      - noteTitle
-//      - noteDescription
-//      - priority (Value can be HIGH, LOW or MEDUIM)
-//      - dateAdded
-//      - dateUpdated
 
-module.exports = mongoose.model('notes',noteSchema)
+module.exports = mongoose.model('user',userSchema)

@@ -1,11 +1,11 @@
-const noteModel = require('../models/NotesModel.js');
+const employeeModel = require('../models/employee');
 const express = require('express');
 const routes = express.Router();
 const moongoose = require('mongoose');
 
-routes.post('/employee', async(req, res) => {
+routes.post('/employees', async(req, res) => {
     //TODO - Write your code here to save the note
-    const employee = new noteModel(req.body);
+    const employee = new employeeModel(req.body);
     try{
         await employees.save();
         res.status(200).send(employee);
@@ -15,16 +15,15 @@ routes.post('/employee', async(req, res) => {
 });
 
 // //TODO - Retrieve all Notes
-// routes.get('/notes',async(req, res) => {
-//     //TODO - Write your code here to returns all note
-//     const notes = await noteModel.find()
-//     try{
-//         res.status(200).send(notes);
-//     }catch(error){
-//         res.status(500).send(error);
-//     }
-// });
-
+routes.get('/employees',async(request,response) =>{
+    const employee = new employeeModel(request.body);
+    try{
+        await employee.save();
+        response.status(200).send(employee);
+    }catch(error){
+        response.status(400).send(employee);
+    }
+})
 // //TODO - Retrieve a single Note with noteId
 // routes.get('/notes/:noteId', async(req, res) => {
 //     //TODO - Write your code here to return onlt one note using noteid
@@ -64,4 +63,4 @@ routes.post('/employee', async(req, res) => {
 //       }
 //     });
 
-// module.exports = routes
+module.exports = routes

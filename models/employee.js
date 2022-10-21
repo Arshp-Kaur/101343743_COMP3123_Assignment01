@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const employeeSchema = new mongoose.Schema({
     /*firstname
     lastname
@@ -29,18 +30,12 @@ const employeeSchema = new mongoose.Schema({
         enum:['Male','Female','Other'],
         max:25,
     },
-    salary:{
-        type:float,
-        require:true,
-        unique:true,
-    }
+    // salary:{
+    //     type:float,
+    //     require:true,
+    //     unique:true,
+    // }
 
 });
-//TODO - Create Note Schema here having fields
-//      - noteTitle
-//      - noteDescription
-//      - priority (Value can be HIGH, LOW or MEDUIM)
-//      - dateAdded
-//      - dateUpdated
 
 module.exports = mongoose.model('employee',employeeSchema)

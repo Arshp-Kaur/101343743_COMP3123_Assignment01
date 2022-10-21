@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+
 const employeeRouter = require('./routes/employeeRoute');
 const userRouter = require('./routes/userRoute');
-
 const SERVER_PORT = 4000 //port numberer initialized
 
 //DB connection string
@@ -28,7 +28,7 @@ mongoose.connect(DB_URL, {
 
 app.use("/api/emp/",employeeRouter) //For the employee page
 
-app.use("/api/user/",userRouter) // For the user page
+// app.use("/api/user/",userRouter) // For the user page
 
 app.route("/").get((req,res)=>{
     res.send("<h1>Assignment 1 - MongoDb using NodeJS and Express</h1>");
