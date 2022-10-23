@@ -30,11 +30,12 @@ const employeeSchema = new mongoose.Schema({
         enum:['Male','Female','Other'],
         max:25,
     },
-    // salary:{
-    //     type:float,
-    //     require:true,
-    //     unique:true,
-    // }
+
+    salary:{
+        type:Number,
+        require:true,
+        unique:true,
+    }
 
 });
 

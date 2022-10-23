@@ -3,64 +3,66 @@ const express = require('express');
 const routes = express.Router();
 const moongoose = require('mongoose');
 
-routes.post('/employees', async(req, res) => {
-    //TODO - Write your code here to save the note
-    const employee = new employeeModel(req.body);
+routes.post('/employee', async(req, res) => {
+    const employee = new employeeModel(req.body.content);
     try{
-        await employees.save();
+        await employee.save();
         res.status(200).send(employee);
     }catch(error){
         res.status(500).send(error)
     }
 });
 
-// //TODO - Retrieve all Notes
-routes.get('/employees',async(request,response) =>{
-    const employee = new employeeModel(request.body);
-    try{
-        await employee.save();
-        response.status(200).send(employee);
-    }catch(error){
-        response.status(400).send(employee);
+routes.get("/employee", async (req, res) => {
+    try {
+        const employee = await EmployeeModel.find()
+        // if employee database is empty display error message
+        if (employee.length == 0) {
+            res.status(400).send("No one found")
+        }
+        else {
+            // display employees
+            res.status(200).send(employee)
+        }
+
+    } catch (error) {
+        res.status(400).send({ message: error.message })
     }
 })
-// //TODO - Retrieve a single Note with noteId
-// routes.get('/notes/:noteId', async(req, res) => {
-//     //TODO - Write your code here to return onlt one note using noteid
-//     try{
-//         res.send(await noteModel.findById(req.params.noteid,req.body));
-//     }catch(error){
-//         res.status(500).send(error);
-//     }
-// });
 
-// //TODO - Update a Note with noteId
-// routes.put("/notes/:noteId", async (req, res) => {
-//     //res.send({message: "Update existing Book By Id"})
-//     if (!req.body.content) {
-//         return res.status(400).send({
-//           message: "Note content can not be empty",
-//         });
-//       }
-//       //TODO - Write your code here to update the note using noteid
-//       else {
-//         await noteModel.findByIdAndUpdate(req.params.noteId, req.body.content);
-//         res.send("Updated successfully");
-//       }
-//     });         
+routes.get('/employee/:empId', async(req, res) => {
+     try{
+         res.send(await employeeModel.findById(req.params.empId));
+     }catch(error){
+         res.status(500).send(error);
+     }
+ });    
+ 
+//Updating employee
+routes.put("/employee/:empId", async (req, res) => {
 
+    try {
+        const updateEmployee = await employeeModel.findByIdAndUpdate(req.params.empId, req.body)
+        res.status(200).send(updateEmployee)
+    } catch (error) {
+        // if employee was not found
+        if (error.kind === "ObjectId") {
+            res.status(400).send({ message: `employee with id: ${req.params.empId} was not found` });
+        }
+        else {
+            res.status(400).json({ message: error.message })
+        }
+    }
+})
 
-// //TODO - Delete a Note with noteId
-
-// routes.delete('/notes/:noteId', async(req, res) => {
-//     // Validate request
-//     //TODO - Write your code here to delete the note using noteid
-//     try {
-//         await noteModel.findByIdAndDelete(req.params.noteId);
-//         res.send("note Id deleted");
-//       } catch (error) {
-//         res.status(500).send(error);
-//       }
-//     });
+routes.delete('/employee/:empId', async(req, res) => {
+  
+    try {
+        await employeeModel.findByIdAndDelete(req.params.noteId);
+        res.send("Employee deleted");
+      } catch (error) {
+        res.status(500).send(error);
+      }
+    });
 
 module.exports = routes

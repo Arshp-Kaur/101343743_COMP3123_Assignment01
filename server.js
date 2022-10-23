@@ -7,7 +7,8 @@ const userRouter = require('./routes/userRoute');
 const SERVER_PORT = 4000 //port numberer initialized
 
 //DB connection string
-const DB_URL = "mongodb+srv://Arshp_Kaur:eNSpBmvRbM2wn19l@cluster0.iu4uasl.mongodb.net/assignment_db?retryWrites=true&w=majority"
+//const DB_URL = "mongodb+srv://Arsh:1c98nqT4GpnQfote@cluster0.iu4uasl.mongodb.net/assignment_db?retryWrites=true&w=majority"
+const DB_URL = "mongodb+srv://AKPreet:Georgebrown@cluster0.awlgo0g.mongodb.net/comp3123_assignment-db?retryWrites=true&w=majority"
 
 const app = express();
 
@@ -28,7 +29,7 @@ mongoose.connect(DB_URL, {
 
 app.use("/api/emp/",employeeRouter) //For the employee page
 
-// app.use("/api/user/",userRouter) // For the user page
+app.use("/api/user/",userRouter) // For the user page
 
 app.route("/").get((req,res)=>{
     res.send("<h1>Assignment 1 - MongoDb using NodeJS and Express</h1>");
