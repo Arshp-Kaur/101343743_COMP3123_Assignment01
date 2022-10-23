@@ -1,9 +1,10 @@
 const employeeModel = require('../models/employee');
 const express = require('express');
-const routes = express.Router();
+const app = express.Router();
 const moongoose = require('mongoose');
 
-routes.post('/employee', async(req, res) => {
+//post 
+app.post('/employee', async(req, res) => {
     const employee = new employeeModel(req.body.content);
     try{
         await employee.save();
@@ -12,13 +13,13 @@ routes.post('/employee', async(req, res) => {
         res.status(500).send(error)
     }
 });
-
-routes.get("/employee", async (req, res) => {
+//gets employee
+app.get("/employee", async (req, res) => {
     try {
-        const employee = await EmployeeModel.find()
+        const employee = await employeeModel.find()
         // if employee database is empty display error message
         if (employee.length == 0) {
-            res.status(400).send("No one found")
+            res.status(400).send("Employee not Found")
         }
         else {
             // display employees
@@ -29,8 +30,8 @@ routes.get("/employee", async (req, res) => {
         res.status(400).send({ message: error.message })
     }
 })
-
-routes.get('/employee/:empId', async(req, res) => {
+// gets employee  by id
+app.get('/employee/:empId', async(req, res) => {
      try{
          res.send(await employeeModel.findById(req.params.empId));
      }catch(error){
@@ -38,31 +39,32 @@ routes.get('/employee/:empId', async(req, res) => {
      }
  });    
  
-//Updating employee
-routes.put("/employee/:empId", async (req, res) => {
+//  /Updating employee
+app.put("/employee/:empId", async (req, res) => {
 
     try {
         const updateEmployee = await employeeModel.findByIdAndUpdate(req.params.empId, req.body)
         res.status(200).send(updateEmployee)
-    } catch (error) {
-        // if employee was not found
-        if (error.kind === "ObjectId") {
-            res.status(400).send({ message: `employee with id: ${req.params.empId} was not found` });
+    } 
+    catch (error) {
+        // if employee not found
+        if(error.kind === "ObjectId"){
+            res.status(400).send({ message: 'employee with id: ${req.params.empId} was not found' });
         }
-        else {
+        else{
             res.status(400).json({ message: error.message })
         }
     }
 })
 
-routes.delete('/employee/:empId', async(req, res) => {
+app.delete('/employee/:empId', async(req, res) => {
   
     try {
         await employeeModel.findByIdAndDelete(req.params.noteId);
-        res.send("Employee deleted");
+        res.send("Employee has been deleted");
       } catch (error) {
         res.status(500).send(error);
       }
     });
 
-module.exports = routes
+module.exports = app

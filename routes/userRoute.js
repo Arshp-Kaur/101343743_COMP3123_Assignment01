@@ -1,9 +1,9 @@
 const userModel = require('../models/user');
 const express = require('express');
-const routes = express.Router();
+const app = express.Router();
 const moongoose = require('mongoose');
 
-routes.post('/signup', async (request, response) => {
+app.post('/signup', async (request, response) => {
     try {
         const newUser = new userModel(request.body)
         await newUser.save()
@@ -18,7 +18,7 @@ routes.post('/signup', async (request, response) => {
     }
 });
 
-routes.post("/login", async (req, res) => {
+app.post("/login", async (req, res) => {
 	let { username, password } = req.body
 	let response
 	try {
@@ -40,5 +40,5 @@ routes.post("/login", async (req, res) => {
 })
 
 
-module.exports = routes
+module.exports = app
 
